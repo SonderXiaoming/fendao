@@ -226,10 +226,12 @@ async def fen_dao(bot, ev):
     type = "ST"
     arrange = "毛分"
     boss = "12345"
-    msg = f'{stage}面'
+    
     
     for arg in args:
-        if arg.upper() in stage_dict:
+        if arg.upper()[0] in stage_dict:
+            if len(arg) > 3:
+                arg = arg[:3]
             stage = arg
         elif arg == "毛分" or arg == "毛伤":
             arrange = arg
@@ -241,6 +243,8 @@ async def fen_dao(bot, ev):
             await bot.send(ev, "出现无效参数，爬爬")
             return
     
+    msg = f'{stage}面'
+
     black_info = ''
 
     black_list = [await load_config(os.path.join(user_path, f'{ev.user_id}', f'{name}')) for name in ['unit_loss.json', 'unit_black.json', 'work_black.json']]
