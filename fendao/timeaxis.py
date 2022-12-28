@@ -25,14 +25,14 @@ def get_clanbattlework():
     with open(clanbattlework_path, 'r', encoding='utf-8') as load_f:
         clanbattlework = json.load(load_f)
     try:
-        data = requests.get(
-            "https://www.caimogu.cc/gzlj/data?date=", headers={'x-requested-with': 'XMLHttpRequest'}).json()
+        data = requests.get("https://www.caimogu.cc/gzlj/data?date=", headers={'x-requested-with': 'XMLHttpRequest'}).json()
         for work in data["data"]:
             hw_id = work["id"]
             stage = work["stage"]
             if hw_id != check_id:
                 check_id = hw_id
-                clanbattle_work[boss_id+1] = {}
+                boss_id += 1
+                clanbattle_work[boss_id] = {}
             clanbattle_work[boss_id][stage] = {
                 "rate": work["rate"], "bosswork": {}}
             for bosswork in work["homework"]:
@@ -47,7 +47,6 @@ def get_clanbattlework():
         return True
     except:
         return False
-
 
 @on_startup
 async def check_msg():
